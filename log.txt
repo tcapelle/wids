@@ -1,0 +1,10 @@
+---Fold 0---
+  AUC score after fold 0 :0.9989046454429626
+---Fold 1---
+  AUC score after fold 1 :0.9989207983016968
+---Fold 2---
+  AUC score after fold 2 :0.9978824257850647
+---Fold 3---
+  AUC score after fold 3 :0.9968186616897583
+---Fold 4---
+  AUC score after fold 4 :0.9976422190666199
