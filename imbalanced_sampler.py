@@ -10,7 +10,7 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
         num_samples (int, optional): number of samples to draw
     """
 
-    def __init__(self, dataset, indices=None, num_samples=None):
+    def __init__(self, dataset, indices=None, num_samples=None, func= lambda x : x):
                 
         # if indices is not provided, 
         # all elements in the dataset will be considered
@@ -26,15 +26,14 @@ class ImbalancedDatasetSampler(torch.utils.data.sampler.Sampler):
         label_to_count = {}
         for idx in self.indices:
             label = self._get_label(dataset, idx)
-            for l in label:
-                if l in label_to_count:
-                    label_to_count[l] += 1
-                else: label_to_count[l]=1
+            if label in label_to_count:
+                label_to_count[label] += 1
+            else: label_to_count[label]=1
         
         
         
         # weight for each sample
-        weights = [1.0 / min([label_to_count[l] for l in self._get_label(dataset, idx)])
+        weights = [1.0 / func(label_to_count[self._get_label(dataset, idx)]) 
                    for idx in self.indices]
         self.weights = torch.DoubleTensor(weights)
 
