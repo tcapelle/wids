@@ -9,7 +9,7 @@ class FocalLoss(nn.Module):
         self.gamma = gamma
         self.logits = logits
 
-    def forward(self, inputs, targets, reduction=True):
+    def forward(self, inputs, targets, reduction='mean'):
         if self.logits:
             CE_loss = F.cross_entropy_with_logits(inputs, targets, reduction='none')
         else:
@@ -17,7 +17,7 @@ class FocalLoss(nn.Module):
         pt = torch.exp(-CE_loss)
         F_loss = self.alpha * (1-pt)**self.gamma * CE_loss
 
-        if reduction:
+        if reduction == 'mean':
             return torch.mean(F_loss)
         else:
             return F_loss
